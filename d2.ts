@@ -1010,6 +1010,8 @@ forward 2
 down 3
 forward 4`
 
+// Part One
+
 type Direction = "forward" | "down" | "up";
 
 interface Command {
@@ -1051,7 +1053,36 @@ const calculatePosition = (input: Command[]): Pos => {
     return { horizontal, depth }
 }
 
-const { horizontal: eH, depth: eD } = calculatePosition(parseInput(exampleInput))
-console.log("example should be 150", eH * eD === 150)
-const { horizontal, depth } = calculatePosition(parseInput(input))
-console.log("answer", horizontal * depth)
+const calculateAnswer = (position: Pos): number => position.depth * position.horizontal;
+
+console.log("example should be 150", calculateAnswer(calculatePosition(parseInput(exampleInput))) === 150)
+console.log("answer", calculateAnswer(calculatePosition(parseInput(input))))
+
+// Part Two
+
+const calculatePositionTwo = (input: Command[]): Pos => {
+    let horizontal = 0;
+    let depth = 0;
+    let aim = 0;
+    input.forEach(({ direction, magnitude }) => {
+        switch (direction) {
+            case "forward":
+                horizontal += magnitude;
+                depth += (aim * magnitude);
+                break;
+            case "down":
+                aim += magnitude;
+                break;
+            case "up":
+                aim -= magnitude;
+                break;
+            default:
+                const exhaustiveCheck: never = direction;
+                throw new Error(`Unhandled case: ${exhaustiveCheck}`);
+        }
+    })
+    return { horizontal, depth }
+}
+
+console.log("example should be 900", calculateAnswer(calculatePositionTwo(parseInput(exampleInput))) === 900)
+console.log("answer", calculateAnswer(calculatePositionTwo(parseInput(input))))
