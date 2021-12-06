@@ -11,6 +11,7 @@
   },
   "scripts": {
     "d1": "ts-node d1.ts",
-    "d2": "ts-node d2.ts"
+    "d2": "ts-node d2.ts",
+    "d3": "ts-node d3.ts"
   }
 }
